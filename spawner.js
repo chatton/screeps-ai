@@ -8,10 +8,10 @@ function spawn(creepType, spawnPointName){
 
     switch (creepType) {
         case harvester.ROLE_NAME:
-            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: harvester.ROLE_NAME });
+            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: creepType });
             break;
         case upgrader.ROLE_NAME:
-            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: upgrader.ROLE_NAME });
+            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: creepType });
             break;
         default:
             console.log("Unknown creep type: " + creepType);
