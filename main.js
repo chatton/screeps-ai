@@ -1,35 +1,45 @@
-var harvester = require('role.harvester');
-var upgrader = require('role.upgrader');
+const util = require("util");
+const harvester = require('role.harvester');
+const upgrader = require('role.upgrader');
+const spawn = require("spawner");
 
+const SPAWN_POINT = "Spawn1";
+
+function clearDeletedCreepMemory() {
+    for(const name in Memory.creeps) {
+        if(!Game.creeps[name]) {
+            delete Memory.creeps[name];
+        }
+    }
+}
 
 function handleHarvesters() {
-    const harvesterName = "Harvester-" + Game.time;
-    const harvesters = harvester.getAll();
+    const harvesters = util.getAll(harvester.ROLE_NAME);
     if(harvesters.length < 3) {
-        harvester.spawn(harvesterName, "Spawn1");
+        spawn(harvester.ROLE_NAME, SPAWN_POINT);
     }
-    
+
     for(const i in harvesters) {
         const creep = harvesters[i];
-        harvester.run(creep, "Spawn1");
+        harvester.run(creep);
     }
 }
 
 function handleUpgraders() {
-    const upgraderName = "Upgrader-" + Game.time;
-    const upgraders = upgrader.getAll();
+    const upgraders = util.getAll(upgrader.ROLE_NAME);
     if(upgraders.length < 3) {
-        upgrader.spawn(upgraderName, "Spawn1");
+        spawn(upgrader.ROLE_NAME, SPAWN_POINT);
     }
-    
-    
+
     for(const i in upgraders) {
         const creep = upgraders[i];
-        upgrader.run(creep, "Spawn1");
+        upgrader.run(creep);
     }
 }
 
+
 module.exports.loop = function () {
+    clearDeletedCreepMemory();
     handleHarvesters();
     handleUpgraders();
 }
