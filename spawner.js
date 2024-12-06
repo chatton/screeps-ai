@@ -1,5 +1,6 @@
 const harvester = require('role.harvester');
 const upgrader = require('role.upgrader');
+const builder = require('role.builder');
 
 function spawn(creepType, spawnPointName){
 
@@ -8,10 +9,9 @@ function spawn(creepType, spawnPointName){
 
     switch (creepType) {
         case harvester.ROLE_NAME:
-            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: creepType });
-            break;
         case upgrader.ROLE_NAME:
-            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: creepType });
+        case builder.ROLE_NAME:
+            spawnPoint.spawnCreep( [WORK, CARRY, MOVE], creepName, { memory: { task: creepType } });
             break;
         default:
             console.log("Unknown creep type: " + creepType);
